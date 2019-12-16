@@ -34,15 +34,21 @@ createjudge = """
 	PRIMARY KEY (judge_id)
 );"""
 
-createparty="""
-    create table party(
-	party_id int,
+createplaintiff="""create table plaintiff(
+	plaintiff_id int,
 	name varchar(10),
 	phone VARCHAR(15),
 	email varchar(20),
-	PRIMARY KEY (party_id)
+	PRIMARY KEY (plaintiff_id)
 );"""
 
+createdefendant="""create table defendant(
+	defendant_id int,
+	name varchar(10),
+	phone VARCHAR(15),
+	email varchar(20),
+	PRIMARY KEY (defendant_id)
+);"""
 createcourt="""
     create table court(
 	court_id int,
@@ -57,25 +63,23 @@ createcourt="""
 createcase="""
     create table kase(
 	case_id int,
-    year YEAR,
+    year int,
     type VARCHAR(20),
     description varchar(45),
     plaintiff_id int ,
     defendant_id int ,
     judge_id int,
     prosecution_id int,
-    defense_id int,
     court_id int,
     verdict VARCHAR(45),
 	PRIMARY KEY (case_id),
     FOREIGN KEY (judge_id) REFERENCES judge(judge_id),
     FOREIGN KEY (court_id) REFERENCES court(court_id),
     FOREIGN KEY (prosecution_id) REFERENCES lawyer(lawyer_id),
-	FOREIGN KEY (plaintiff_id) REFERENCES party(party_id),
-    FOREIGN KEY (defendant_id) REFERENCES party(party_id)
+	FOREIGN KEY (plaintiff_id) REFERENCES plaintiff(plaintiff_id),
+    FOREIGN KEY (defendant_id) REFERENCES defendant(defendant_id)
 );"""
 
-#val = (1, "Sandra", "Bullock", "Environmental Law", 6, 3316263333, "s@bullock.com")
 
 mycursor.execute(createdb)
 mycursor.execute(usedb)
@@ -83,7 +87,9 @@ mycursor.execute(createlawyer)
 mycursor.execute(usedb)
 mycursor.execute(createjudge)
 mycursor.execute(usedb)
-mycursor.execute(createparty)
+mycursor.execute(createplaintiff)
+mycursor.execute(usedb)
+mycursor.execute(createdefendant)
 mycursor.execute(usedb)
 mycursor.execute(createcourt)
 mycursor.execute(usedb)
